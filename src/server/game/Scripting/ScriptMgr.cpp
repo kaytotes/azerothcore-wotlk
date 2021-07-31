@@ -402,6 +402,11 @@ void ScriptMgr::OnBeforeCreatureTemplateAddonQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeCreatureTemplateAddonQueried(query);
 }
 
+void ScriptMgr::OnBeforeCreatureTemplateSpellsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeCreatureTemplateSpellsQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

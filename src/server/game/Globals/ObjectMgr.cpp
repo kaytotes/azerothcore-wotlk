@@ -663,8 +663,12 @@ void ObjectMgr::LoadCreatureTemplateSpells()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                               0           1       2
-    QueryResult result = WorldDatabase.Query("SELECT CreatureID, `Index`, Spell FROM creature_template_spell");
+    //                           0            1        2
+    std::string query = "SELECT CreatureID, `Index`, Spell FROM creature_template_spell";
+
+    sScriptMgr->OnBeforeCreatureTemplateSpellsQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
