@@ -477,6 +477,8 @@ void ObjectMgr::LoadCreatureTemplates()
                          "InhabitType, HoverHeight, HealthModifier, ManaModifier, ArmorModifier, ExperienceModifier, RacialLeader, movementId, RegenHealth, mechanic_immune_mask, spell_school_immune_mask, flags_extra, ScriptName "
                          "FROM creature_template;");
 
+    sScriptMgr->OnAfterCreatureTemplateQueried(result);
+
     if (!result)
     {
         LOG_INFO("server.loading", ">> Loaded 0 creature template definitions. DB table `creature_template` is empty.");

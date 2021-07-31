@@ -194,6 +194,13 @@ public:
 
     // Called when the world is actually shut down.
     virtual void OnShutdown() { }
+
+    /**
+     * @brief This hook runs after we have queried the `creature_template` template before parsing it. 
+     *
+     * @param result The result of the query so that if wanted you can modify it, adjust and re-run the query etc before the template is parsed.
+     */
+    virtual void OnAfterCreatureTemplateQueried(QueryResult& /*result*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1472,6 +1479,7 @@ public: /* WorldScript */
     void OnWorldUpdate(uint32 diff);
     void OnStartup();
     void OnShutdown();
+    void OnAfterCreatureTemplateQueried(QueryResult& result);
 
 public: /* FormulaScript */
     void OnHonorCalculation(float& honor, uint8 level, float multiplier);

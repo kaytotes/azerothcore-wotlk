@@ -392,6 +392,11 @@ void ScriptMgr::OnLoadCustomDatabaseTable()
     FOREACH_SCRIPT(WorldScript)->OnLoadCustomDatabaseTable();
 }
 
+void ScriptMgr::OnAfterCreatureTemplateQueried(QueryResult& result)
+{
+    FOREACH_SCRIPT(WorldScript)->OnAfterCreatureTemplateQueried(result);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA
