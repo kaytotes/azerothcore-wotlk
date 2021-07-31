@@ -397,6 +397,11 @@ void ScriptMgr::OnAfterCreatureTemplateQueried(QueryResult& result)
     FOREACH_SCRIPT(WorldScript)->OnAfterCreatureTemplateQueried(result);
 }
 
+void ScriptMgr::OnAfterCreatureTemplateAddonQueried(QueryResult& result)
+{
+    FOREACH_SCRIPT(WorldScript)->OnAfterCreatureTemplateAddonQueried(result);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

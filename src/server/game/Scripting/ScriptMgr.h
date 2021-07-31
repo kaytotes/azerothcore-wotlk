@@ -196,11 +196,18 @@ public:
     virtual void OnShutdown() { }
 
     /**
-     * @brief This hook runs after we have queried the `creature_template` template before parsing it. 
+     * @brief This hook runs after we have queried the `creature_template` table before parsing it. 
      *
      * @param result The result of the query so that if wanted you can modify it, adjust and re-run the query etc before the template is parsed.
      */
     virtual void OnAfterCreatureTemplateQueried(QueryResult& /*result*/) {}
+
+    /**
+     * @brief This hook runs after we have queried the `creature_template_addon` table before parsing it. 
+     *
+     * @param result The result of the query so that if wanted you can modify it, adjust and re-run the query etc before the template addon is parsed.
+     */
+    virtual void OnAfterCreatureTemplateAddonQueried(QueryResult& /*result*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1480,6 +1487,7 @@ public: /* WorldScript */
     void OnStartup();
     void OnShutdown();
     void OnAfterCreatureTemplateQueried(QueryResult& result);
+    void OnAfterCreatureTemplateAddonQueried(QueryResult& result);
 
 public: /* FormulaScript */
     void OnHonorCalculation(float& honor, uint8 level, float multiplier);

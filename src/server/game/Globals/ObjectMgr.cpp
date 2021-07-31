@@ -711,6 +711,8 @@ void ObjectMgr::LoadCreatureTemplateAddons()
     //                                                0       1       2      3       4       5      6         7
     QueryResult result = WorldDatabase.Query("SELECT entry, path_id, mount, bytes1, bytes2, emote, isLarge, auras FROM creature_template_addon");
 
+    sScriptMgr->OnAfterCreatureTemplateAddonQueried(result);
+
     if (!result)
     {
         LOG_INFO("server.loading", ">> Loaded 0 creature template addon definitions. DB table `creature_template_addon` is empty.");
