@@ -392,14 +392,14 @@ void ScriptMgr::OnLoadCustomDatabaseTable()
     FOREACH_SCRIPT(WorldScript)->OnLoadCustomDatabaseTable();
 }
 
-void ScriptMgr::OnAfterCreatureTemplateQueried(QueryResult& result)
+void ScriptMgr::OnBeforeCreatureTemplateQueried(std::string& query)
 {
-    FOREACH_SCRIPT(WorldScript)->OnAfterCreatureTemplateQueried(result);
+    FOREACH_SCRIPT(WorldScript)->OnBeforeCreatureTemplateQueried(query);
 }
 
-void ScriptMgr::OnAfterCreatureTemplateAddonQueried(QueryResult& result)
+void ScriptMgr::OnBeforeCreatureTemplateAddonQueried(std::string& query)
 {
-    FOREACH_SCRIPT(WorldScript)->OnAfterCreatureTemplateAddonQueried(result);
+    FOREACH_SCRIPT(WorldScript)->OnBeforeCreatureTemplateAddonQueried(query);
 }
 
 void ScriptMgr::OnBeforeConfigLoad(bool reload)

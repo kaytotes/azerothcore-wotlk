@@ -462,22 +462,23 @@ void ObjectMgr::LoadPointOfInterestLocales()
 void ObjectMgr::LoadCreatureTemplates()
 {
     uint32 oldMSTime = getMSTime();
+    //                           0         1                   2                   3                   4            5            6         7         8
+    std::string query = "SELECT entry, difficulty_entry_1, difficulty_entry_2, difficulty_entry_3, KillCredit1, KillCredit2, modelid1, modelid2, modelid3, "
+    //                        9         10    11       12        13              14        15        16   17       18       19          20          21
+                        "modelid4, name, subname, IconName, gossip_menu_id, minlevel, maxlevel, exp, faction, npcflag, speed_walk, speed_run, detection_range, "
+    //                        22      23     24         25              26              27               28            29             30          31          32
+                        "scale, `rank`, dmgschool, DamageModifier, BaseAttackTime, RangeAttackTime, BaseVariance, RangeVariance, unit_class, unit_flags, unit_flags2, "
+    //                        33            34      35            36             37             38         39
+                        "dynamicflags, family, trainer_type, trainer_spell, trainer_class, trainer_race, type, "
+    //                        40          41      42              43        44              45         46       47       48      49
+                        "type_flags, lootid, pickpocketloot, skinloot, PetSpellDataId, VehicleId, mingold, maxgold, AIName, MovementType, "
+    //                        50           51           52              53            54             55                  56            57          58           59                    60                        61           62
+                        "InhabitType, HoverHeight, HealthModifier, ManaModifier, ArmorModifier, ExperienceModifier, RacialLeader, movementId, RegenHealth, mechanic_immune_mask, spell_school_immune_mask, flags_extra, ScriptName "
+                        "FROM creature_template;";
 
-//                                                   0      1                   2                   3                   4            5            6         7         8
-    QueryResult result = WorldDatabase.Query("SELECT entry, difficulty_entry_1, difficulty_entry_2, difficulty_entry_3, KillCredit1, KillCredit2, modelid1, modelid2, modelid3, "
-//                        9         10    11       12        13              14        15        16   17       18       19          20          21
-                         "modelid4, name, subname, IconName, gossip_menu_id, minlevel, maxlevel, exp, faction, npcflag, speed_walk, speed_run, detection_range, "
-//                        22      23     24         25              26              27               28            29             30          31          32
-                         "scale, `rank`, dmgschool, DamageModifier, BaseAttackTime, RangeAttackTime, BaseVariance, RangeVariance, unit_class, unit_flags, unit_flags2, "
-//                        33            34      35            36             37             38            39
-                         "dynamicflags, family, trainer_type, trainer_spell, trainer_class, trainer_race, type, "
-//                        40          41      42              43        44              45         46       47       48      49
-                         "type_flags, lootid, pickpocketloot, skinloot, PetSpellDataId, VehicleId, mingold, maxgold, AIName, MovementType, "
-//                        50           51           52              53            54             55                  56            57          58           59                    60                        61           62
-                         "InhabitType, HoverHeight, HealthModifier, ManaModifier, ArmorModifier, ExperienceModifier, RacialLeader, movementId, RegenHealth, mechanic_immune_mask, spell_school_immune_mask, flags_extra, ScriptName "
-                         "FROM creature_template;");
-
-    sScriptMgr->OnAfterCreatureTemplateQueried(result);
+    sScriptMgr->OnBeforeCreatureTemplateQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
@@ -708,10 +709,12 @@ void ObjectMgr::LoadCreatureTemplateAddons()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                                0       1       2      3       4       5      6         7
-    QueryResult result = WorldDatabase.Query("SELECT entry, path_id, mount, bytes1, bytes2, emote, isLarge, auras FROM creature_template_addon");
+    //                           0       1       2      3       4       5      6         7
+    std::string query = "SELECT entry, path_id, mount, bytes1, bytes2, emote, isLarge, auras FROM creature_template_addon";
 
-    sScriptMgr->OnAfterCreatureTemplateAddonQueried(result);
+    sScriptMgr->OnBeforeCreatureTemplateAddonQueried(query);
+
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {

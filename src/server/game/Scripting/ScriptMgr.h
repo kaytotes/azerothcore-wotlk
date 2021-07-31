@@ -196,18 +196,18 @@ public:
     virtual void OnShutdown() { }
 
     /**
-     * @brief This hook runs after we have queried the `creature_template` table before parsing it. 
+     * @brief Called before the `creature_template` table is queried to allow us to modify the query that will be called.
      *
-     * @param result The result of the query so that if wanted you can modify it, adjust and re-run the query etc before the template is parsed.
+     * @param query The query that we are overriding.
      */
-    virtual void OnAfterCreatureTemplateQueried(QueryResult& /*result*/) {}
+    virtual void OnBeforeCreatureTemplateQueried(std::string& /*query*/) {}
 
     /**
-     * @brief This hook runs after we have queried the `creature_template_addon` table before parsing it. 
+     * @brief Called before the `creature_template_addon` table is queried to allow us to modify the query that will be called.
      *
-     * @param result The result of the query so that if wanted you can modify it, adjust and re-run the query etc before the template addon is parsed.
+     * @param query The query that we are overriding.
      */
-    virtual void OnAfterCreatureTemplateAddonQueried(QueryResult& /*result*/) {}
+    virtual void OnBeforeCreatureTemplateAddonQueried(std::string& /*query*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1486,8 +1486,8 @@ public: /* WorldScript */
     void OnWorldUpdate(uint32 diff);
     void OnStartup();
     void OnShutdown();
-    void OnAfterCreatureTemplateQueried(QueryResult& result);
-    void OnAfterCreatureTemplateAddonQueried(QueryResult& result);
+    void OnBeforeCreatureTemplateQueried(std::string& query);
+    void OnBeforeCreatureTemplateAddonQueried(std::string& query);
 
 public: /* FormulaScript */
     void OnHonorCalculation(float& honor, uint8 level, float multiplier);
