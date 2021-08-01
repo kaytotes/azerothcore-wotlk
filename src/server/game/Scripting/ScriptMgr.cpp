@@ -412,6 +412,11 @@ void ScriptMgr::OnBeforeCreatureTemplateResistancesQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeCreatureTemplateResistancesQueried(query);
 }
 
+void ScriptMgr::OnBeforeCreatureEquipTemplateQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeCreatureEquipTemplateQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

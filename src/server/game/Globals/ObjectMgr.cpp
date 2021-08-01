@@ -1317,8 +1317,12 @@ void ObjectMgr::LoadEquipmentTemplates()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                                 0         1       2       3       4
-    QueryResult result = WorldDatabase.Query("SELECT CreatureID, ID, ItemID1, ItemID2, ItemID3 FROM creature_equip_template");
+    //                           0         1       2       3       4
+    std::string query = "SELECT CreatureID, ID, ItemID1, ItemID2, ItemID3 FROM creature_equip_template";
+
+    sScriptMgr->OnBeforeCreatureEquipTemplateQueried(query);
+
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
