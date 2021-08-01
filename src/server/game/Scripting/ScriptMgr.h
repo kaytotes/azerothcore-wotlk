@@ -267,6 +267,13 @@ public:
      * @param creatureData The full data of the creature that was removed from the grid.
      */
     virtual void OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType /*spawnId*/, CreatureData const* /*creatureData*/) {}
+
+    /**
+     * @brief Fired before the `gameobject_template` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeGameObjectTemplateQueried(std::string& /*query*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1555,6 +1562,7 @@ public: /* WorldScript */
     void OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fields);
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
     void OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
+    void OnBeforeGameObjectTemplateQueried(std::string& query);
 
 public: /* FormulaScript */
     void OnHonorCalculation(float& honor, uint8 level, float multiplier);

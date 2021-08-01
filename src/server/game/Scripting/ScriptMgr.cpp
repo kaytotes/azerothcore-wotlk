@@ -442,6 +442,11 @@ void ScriptMgr::OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType spawnId, Crea
     FOREACH_SCRIPT(WorldScript)->OnAfterCreatureRemovedFromGrid(spawnId, creatureData);
 }
 
+void ScriptMgr::OnBeforeGameObjectTemplateQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeGameObjectTemplateQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA
