@@ -1133,8 +1133,12 @@ void ObjectMgr::LoadCreatureAddons()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                                0       1       2      3       4       5      6        7
-    QueryResult result = WorldDatabase.Query("SELECT guid, path_id, mount, bytes1, bytes2, emote, isLarge, auras FROM creature_addon");
+    //                           0       1       2      3       4       5      6        7
+    std::string query = "SELECT guid, path_id, mount, bytes1, bytes2, emote, isLarge, auras FROM creature_addon";
+
+    sScriptMgr->OnBeforeCreatureAddonsQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {

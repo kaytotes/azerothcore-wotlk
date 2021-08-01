@@ -422,6 +422,11 @@ void ScriptMgr::OnBeforeCreaturesQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeCreaturesQueried(query);
 }
 
+void ScriptMgr::OnBeforeCreatureAddonsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeCreatureAddonsQueried(query);
+}
+
 void ScriptMgr::OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fields)
 {
     FOREACH_SCRIPT(WorldScript)->OnAfterCreatureDataParsed(creatureData, fields);

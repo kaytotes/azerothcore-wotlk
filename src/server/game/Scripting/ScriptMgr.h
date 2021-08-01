@@ -196,49 +196,56 @@ public:
     virtual void OnShutdown() { }
 
     /**
-     * @brief Called before the `creature_template` table is queried to allow us to modify the query that will be called.
+     * @brief Fired before the `creature_template` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeCreatureTemplateQueried(std::string& /*query*/) {}
 
     /**
-     * @brief Called before the `creature_template_addon` table is queried to allow us to modify the query that will be called.
+     * @brief Fired before the `creature_template_addon` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeCreatureTemplateAddonQueried(std::string& /*query*/) {}
 
     /**
-     * @brief Called before the `creature_template_spell` table is queried to allow us to modify the query that will be called.
+     * @brief Fired before the `creature_template_spell` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeCreatureTemplateSpellsQueried(std::string& /*query*/) {}
 
     /**
-     * @brief Called before the `creature_template_resistance` table is queried to allow us to modify the query that will be called.
+     * @brief Fired before the `creature_template_resistance` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeCreatureTemplateResistancesQueried(std::string& /*query*/) {}
 
     /**
-     * @brief Called before the `creature_equip_template` table is queried to allow us to modify the query that will be called.
+     * @brief Fired before the `creature_equip_template` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeCreatureEquipTemplateQueried(std::string& /*query*/) {}
 
     /**
-     * @brief Called before the `creature` table is queried to allow us to modify the query that will be called.
+     * @brief Fired before the `creature` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeCreaturesQueried(std::string& /*query*/) {}
 
     /**
-     * @brief Called after data from the `creature` table has been parsed and converted into Creature Data.
+     * @brief Fired before the `creature_addons` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeCreatureAddonsQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired after data from the `creature` table has been parsed and converted into Creature Data.
      *
      * @param creatureData The parsed creature data.
      * @param fields The original database fields we got for this creature we're loading.
@@ -246,7 +253,7 @@ public:
     virtual void OnAfterCreatureDataParsed(CreatureData& /*creatureData*/, Field* /*fields*/) {}
 
     /**
-     * @brief Called after a Creature has been added to the grid.
+     * @brief Fired after a Creature has been added to the grid.
      *
      * @param spawnId The guid of the creature that was added to the grid.
      * @param creatureData The full data of the creature that was added to the grid.
@@ -254,7 +261,7 @@ public:
     virtual void OnAfterCreatureAddedToGrid(ObjectGuid::LowType /*spawnId*/, CreatureData const* /*creatureData*/) {}
 
     /**
-     * @brief Called after a Creature has been removed from the grid.
+     * @brief Fired after a Creature has been removed from the grid.
      *
      * @param spawnId The guid of the creature that was removed from the grid.
      * @param creatureData The full data of the creature that was removed from the grid.
@@ -1544,6 +1551,7 @@ public: /* WorldScript */
     void OnBeforeCreatureTemplateResistancesQueried(std::string & query);
     void OnBeforeCreatureEquipTemplateQueried(std::string & query);
     void OnBeforeCreaturesQueried(std::string& query);
+    void OnBeforeCreatureAddonsQueried(std::string& query);
     void OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fields);
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
     void OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
