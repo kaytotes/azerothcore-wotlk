@@ -244,6 +244,22 @@ public:
      * @param fields The original database fields we got for this creature we're loading.
      */
     virtual void OnAfterCreatureDataParsed(CreatureData& /*creatureData*/, Field* /*fields*/) {}
+
+    /**
+     * @brief Called after a Creature has been added to the grid.
+     *
+     * @param spawnId The guid of the creature that was added to the grid.
+     * @param creatureData The full data of the creature that was added to the grid.
+     */
+    virtual void OnAfterCreatureAddedToGrid(ObjectGuid::LowType /*spawnId*/, CreatureData const* /*creatureData*/) {}
+
+    /**
+     * @brief Called after a Creature has been removed from the grid.
+     *
+     * @param spawnId The guid of the creature that was removed from the grid.
+     * @param creatureData The full data of the creature that was removed from the grid.
+     */
+    virtual void OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType /*spawnId*/, CreatureData const* /*creatureData*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1529,6 +1545,8 @@ public: /* WorldScript */
     void OnBeforeCreatureEquipTemplateQueried(std::string & query);
     void OnBeforeCreaturesQueried(std::string& query);
     void OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fields);
+    void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
+    void OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
 
 public: /* FormulaScript */
     void OnHonorCalculation(float& honor, uint8 level, float multiplier);

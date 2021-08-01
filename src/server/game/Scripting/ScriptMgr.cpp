@@ -427,6 +427,16 @@ void ScriptMgr::OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fie
     FOREACH_SCRIPT(WorldScript)->OnAfterCreatureDataParsed(creatureData, fields);
 }
 
+void ScriptMgr::OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData)
+{
+    FOREACH_SCRIPT(WorldScript)->OnAfterCreatureAddedToGrid(spawnId, creatureData);
+}
+
+void ScriptMgr::OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData)
+{
+    FOREACH_SCRIPT(WorldScript)->OnAfterCreatureRemovedFromGrid(spawnId, creatureData);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

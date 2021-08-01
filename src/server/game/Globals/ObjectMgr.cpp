@@ -2015,6 +2015,8 @@ void ObjectMgr::AddCreatureToGrid(ObjectGuid::LowType guid, CreatureData const* 
             cell_guids.creatures.insert(guid);
         }
     }
+
+    sScriptMgr->OnAfterCreatureAddedToGrid(guid, data);
 }
 
 void ObjectMgr::RemoveCreatureFromGrid(ObjectGuid::LowType guid, CreatureData const* data)
@@ -2029,6 +2031,8 @@ void ObjectMgr::RemoveCreatureFromGrid(ObjectGuid::LowType guid, CreatureData co
             cell_guids.creatures.erase(guid);
         }
     }
+
+    sScriptMgr->OnAfterCreatureRemovedFromGrid(guid, data);
 }
 
 uint32 ObjectMgr::AddGOData(uint32 entry, uint32 mapId, float x, float y, float z, float o, uint32 spawntimedelay, float rotation0, float rotation1, float rotation2, float rotation3)
