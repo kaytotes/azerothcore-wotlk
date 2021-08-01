@@ -617,8 +617,12 @@ void ObjectMgr::LoadCreatureTemplateResistances()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                               0           1       2
-    QueryResult result = WorldDatabase.Query("SELECT CreatureID, School, Resistance FROM creature_template_resistance");
+    //                            0           1       2
+    std::string query = "SELECT CreatureID, School, Resistance FROM creature_template_resistance";
+
+    sScriptMgr->OnBeforeCreatureTemplateResistancesQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
