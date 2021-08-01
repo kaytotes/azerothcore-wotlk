@@ -275,6 +275,7 @@ struct CreatureData
     uint32 dynamicflags{0};
     bool dbData{true};
     bool overwrittenZ{false};
+    std::map<std::string, std::string> customData;
 };
 
 struct CreatureModelInfo

@@ -417,6 +417,16 @@ void ScriptMgr::OnBeforeCreatureEquipTemplateQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeCreatureEquipTemplateQueried(query);
 }
 
+void ScriptMgr::OnBeforeCreaturesQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeCreaturesQueried(query);
+}
+
+void ScriptMgr::OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fields)
+{
+    FOREACH_SCRIPT(WorldScript)->OnAfterCreatureDataParsed(creatureData, fields);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

@@ -229,6 +229,21 @@ public:
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeCreatureEquipTemplateQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Called before the `creature` table is queried to allow us to modify the query that will be called.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeCreaturesQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Called after data from the `creature` table has been parsed and converted into Creature Data.
+     *
+     * @param creatureData The parsed creature data.
+     * @param fields The original database fields we got for this creature we're loading.
+     */
+    virtual void OnAfterCreatureDataParsed(CreatureData& /*creatureData*/, Field* /*fields*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1512,6 +1527,8 @@ public: /* WorldScript */
     void OnBeforeCreatureTemplateSpellsQueried(std::string & query);
     void OnBeforeCreatureTemplateResistancesQueried(std::string & query);
     void OnBeforeCreatureEquipTemplateQueried(std::string & query);
+    void OnBeforeCreaturesQueried(std::string& query);
+    void OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fields);
 
 public: /* FormulaScript */
     void OnHonorCalculation(float& honor, uint8 level, float multiplier);

@@ -1834,13 +1834,17 @@ void ObjectMgr::LoadCreatures()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                               0              1   2    3        4             5           6           7           8            9              10
-    QueryResult result = WorldDatabase.Query("SELECT creature.guid, id, map, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, wander_distance, "
-                         //   11               12         13       14            15         16         17          18          19                20                   21
-                         "currentwaypoint, curhealth, curmana, MovementType, spawnMask, phaseMask, eventEntry, pool_entry, creature.npcflag, creature.unit_flags, creature.dynamicflags "
-                         "FROM creature "
-                         "LEFT OUTER JOIN game_event_creature ON creature.guid = game_event_creature.guid "
-                         "LEFT OUTER JOIN pool_creature ON creature.guid = pool_creature.guid");
+    //                           0              1   2    3        4             5           6           7           8            9              10
+    std::string query = "SELECT creature.guid, id, map, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, wander_distance, "
+                        //   11               12         13       14            15         16         17          18          19                20                   21
+                        "currentwaypoint, curhealth, curmana, MovementType, spawnMask, phaseMask, eventEntry, pool_entry, creature.npcflag, creature.unit_flags, creature.dynamicflags "
+                        "FROM creature "
+                        "LEFT OUTER JOIN game_event_creature ON creature.guid = game_event_creature.guid "
+                        "LEFT OUTER JOIN pool_creature ON creature.guid = pool_creature.guid";
+
+    sScriptMgr->OnBeforeCreaturesQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
@@ -1971,6 +1975,8 @@ void ObjectMgr::LoadCreatures()
             LOG_ERROR("sql.sql", "Table `creature` have creature (SpawnId: %u Entry: %u) with `phaseMask`=0 (not visible for anyone), set to 1.", spawnId, data.id);
             data.phaseMask = 1;
         }
+
+        sScriptMgr->OnAfterCreatureDataParsed(data, fields);
 
         if (sWorld->getBoolConfig(CONFIG_CALCULATE_CREATURE_ZONE_AREA_DATA))
         {
