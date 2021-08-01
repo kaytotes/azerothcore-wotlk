@@ -447,6 +447,11 @@ void ScriptMgr::OnBeforeGameObjectTemplateQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeGameObjectTemplateQueried(query);
 }
 
+void ScriptMgr::OnBeforeGameObjectTemplateAddonQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeGameObjectTemplateAddonQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

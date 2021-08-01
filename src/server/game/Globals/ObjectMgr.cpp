@@ -6842,9 +6842,13 @@ void ObjectMgr::LoadGameObjectTemplate()
 void ObjectMgr::LoadGameObjectTemplateAddons()
 {
     uint32 oldMSTime = getMSTime();
+    
+    //                           0       1       2      3        4
+    std::string query = "SELECT entry, faction, flags, mingold, maxgold FROM gameobject_template_addon";
+    
+    sScriptMgr->OnBeforeGameObjectTemplateAddonQueried(query);
 
-    //                                                0       1       2      3        4
-    QueryResult result = WorldDatabase.Query("SELECT entry, faction, flags, mingold, maxgold FROM gameobject_template_addon");
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
