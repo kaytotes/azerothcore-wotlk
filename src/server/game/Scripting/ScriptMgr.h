@@ -281,6 +281,13 @@ public:
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeGameObjectTemplateAddonQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `gameobject` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeGameObjectsQueried(std::string& /*query*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1559,6 +1566,8 @@ public: /* WorldScript */
     void OnWorldUpdate(uint32 diff);
     void OnStartup();
     void OnShutdown();
+
+    // Data loading hooks.
     void OnBeforeCreatureTemplateQueried(std::string& query);
     void OnBeforeCreatureTemplateAddonQueried(std::string& query);
     void OnBeforeCreatureTemplateSpellsQueried(std::string & query);
@@ -1567,10 +1576,14 @@ public: /* WorldScript */
     void OnBeforeCreaturesQueried(std::string& query);
     void OnBeforeCreatureAddonsQueried(std::string& query);
     void OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fields);
-    void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
-    void OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
+
     void OnBeforeGameObjectTemplateQueried(std::string& query);
     void OnBeforeGameObjectTemplateAddonQueried(std::string& query);
+    void OnBeforeGameObjectsQueried(std::string& query);
+
+    // Grid Hooks
+    void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
+    void OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
 
 public: /* FormulaScript */
     void OnHonorCalculation(float& honor, uint8 level, float multiplier);
