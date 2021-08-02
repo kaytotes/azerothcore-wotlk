@@ -457,6 +457,22 @@ void ScriptMgr::OnBeforeGameObjectsQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeGameObjectsQueried(query);
 }
 
+void ScriptMgr::OnAfterGameObjectDataParsed(GameObjectData& gameObjectData, Field* fields)
+{
+    FOREACH_SCRIPT(WorldScript)->OnAfterGameObjectDataParsed(gameObjectData, fields);
+}
+
+void ScriptMgr::OnAfterGameObjectAddedToGrid(ObjectGuid::LowType guid, GameObjectData const* gameObjectData)
+{
+    FOREACH_SCRIPT(WorldScript)->OnAfterGameObjectAddedToGrid(guid, gameObjectData);
+}
+
+void ScriptMgr::OnAfterGameObjectRemovedFromGrid(ObjectGuid::LowType guid, GameObjectData const* gameObjectData)
+{
+    FOREACH_SCRIPT(WorldScript)->OnAfterGameObjectRemovedFromGrid(guid, gameObjectData);
+}
+
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

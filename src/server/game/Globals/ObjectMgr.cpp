@@ -2291,6 +2291,8 @@ void ObjectMgr::LoadGameobjects()
             data.phaseMask = 1;
         }
 
+        sScriptMgr->OnAfterGameObjectDataParsed(data, fields);
+
         if (sWorld->getBoolConfig(CONFIG_CALCULATE_GAMEOBJECT_ZONE_AREA_DATA))
         {
             uint32 zoneId = sMapMgr->GetZoneId(data.mapid, data.posX, data.posY, data.posZ);
@@ -2326,6 +2328,8 @@ void ObjectMgr::AddGameobjectToGrid(ObjectGuid::LowType guid, GameObjectData con
             cell_guids.gameobjects.insert(guid);
         }
     }
+
+    sScriptMgr->OnAfterGameObjectAddedToGrid(guid, data);
 }
 
 void ObjectMgr::RemoveGameobjectFromGrid(ObjectGuid::LowType guid, GameObjectData const* data)
@@ -2340,6 +2344,8 @@ void ObjectMgr::RemoveGameobjectFromGrid(ObjectGuid::LowType guid, GameObjectDat
             cell_guids.gameobjects.erase(guid);
         }
     }
+
+    sScriptMgr->OnAfterGameObjectRemovedFromGrid(guid, data);
 }
 
 ObjectGuid ObjectMgr::GetPlayerGUIDByName(std::string const& name) const

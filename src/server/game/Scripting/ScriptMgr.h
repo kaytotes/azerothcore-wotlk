@@ -245,7 +245,7 @@ public:
     virtual void OnBeforeCreatureAddonsQueried(std::string& /*query*/) {}
 
     /**
-     * @brief Fired after data from the `creature` table has been parsed and converted into Creature Data.
+     * @brief Fired after data from the `creature` table has been parsed and converted into CreatureData.
      *
      * @param creatureData The parsed creature data.
      * @param fields The original database fields we got for this creature we're loading.
@@ -288,6 +288,30 @@ public:
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeGameObjectsQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired after data from the `gameobject` table has been parsed and converted into GameObjectData.
+     *
+     * @param gameObjectData The parsed creature data.
+     * @param fields The original database fields we got for this game object we're loading.
+     */
+    virtual void OnAfterGameObjectDataParsed(GameObjectData& /*gameObjectData*/, Field* /*fields*/) {}
+
+    /**
+     * @brief Fired after a Game Object has been added to the grid.
+     *
+     * @param guid The guid of the game object that was added to the grid.
+     * @param gameObjectData The full data of the game object that was added to the grid.
+     */
+    virtual void OnAfterGameObjectAddedToGrid(ObjectGuid::LowType /*guid*/, GameObjectData const* /*gameObjectData*/) {}
+
+    /**
+     * @brief Fired after a Game Object has been removed from the grid.
+     *
+     * @param guid The guid of the game object that was removed from the grid.
+     * @param gameObjectData The full data of the game object that was removed from the grid.
+     */
+    virtual void OnAfterGameObjectRemovedFromGrid(ObjectGuid::LowType /*guid*/, GameObjectData const* /*gameObjectData*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1576,14 +1600,16 @@ public: /* WorldScript */
     void OnBeforeCreaturesQueried(std::string& query);
     void OnBeforeCreatureAddonsQueried(std::string& query);
     void OnAfterCreatureDataParsed(CreatureData& creatureData, Field* fields);
-
     void OnBeforeGameObjectTemplateQueried(std::string& query);
     void OnBeforeGameObjectTemplateAddonQueried(std::string& query);
     void OnBeforeGameObjectsQueried(std::string& query);
+    void OnAfterGameObjectDataParsed(GameObjectData& gameObjectData, Field* fields);
 
     // Grid Hooks
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
     void OnAfterCreatureRemovedFromGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
+    void OnAfterGameObjectAddedToGrid(ObjectGuid::LowType guid, GameObjectData const* gameObjectData);
+    void OnAfterGameObjectRemovedFromGrid(ObjectGuid::LowType guid, GameObjectData const* gameObjectData);
 
 public: /* FormulaScript */
     void OnHonorCalculation(float& honor, uint8 level, float multiplier);
