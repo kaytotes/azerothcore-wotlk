@@ -9,6 +9,7 @@
 #include "MoveSpline.h"
 #include "Transport.h"
 #include "TransportMgr.h"
+#include "ScriptMgr.h"
 
 TransportTemplate::~TransportTemplate()
 {
@@ -418,7 +419,11 @@ void TransportMgr::SpawnContinentTransports()
 
     if (sWorld->getBoolConfig(CONFIG_ENABLE_CONTINENT_TRANSPORT))
     {
-        result = WorldDatabase.Query("SELECT guid, entry FROM transports");
+        std::string query = "SELECT guid, entry FROM transports";
+
+        sScriptMgr->OnBeforeTransportsQueried(query);
+
+        result = WorldDatabase.Query(query.c_str());
         if (result)
         {
             do

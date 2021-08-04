@@ -341,6 +341,13 @@ public:
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeItemSetNamesQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `transports` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeTransportsQueried(std::string& /*query*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1637,6 +1644,7 @@ public: /* WorldScript */
     void OnBeforeItemTemplatesQueried(std::string& query);
     void OnBeforeLootTemplateQueried(std::string& query, std::string lootStoreName);
     void OnBeforeItemSetNamesQueried(std::string& query);
+    void OnBeforeTransportsQueried(std::string& query);
 
     // Grid Hooks
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
