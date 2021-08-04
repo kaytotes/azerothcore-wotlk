@@ -462,6 +462,11 @@ void ScriptMgr::OnAfterGameObjectDataParsed(GameObjectData& gameObjectData, Fiel
     FOREACH_SCRIPT(WorldScript)->OnAfterGameObjectDataParsed(gameObjectData, fields);
 }
 
+void ScriptMgr::OnBeforeGameObjectAddonsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeGameObjectAddonsQueried(query);
+}
+
 void ScriptMgr::OnAfterGameObjectAddedToGrid(ObjectGuid::LowType guid, GameObjectData const* gameObjectData)
 {
     FOREACH_SCRIPT(WorldScript)->OnAfterGameObjectAddedToGrid(guid, gameObjectData);

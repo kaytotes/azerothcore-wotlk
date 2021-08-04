@@ -289,6 +289,13 @@ public:
      */
     virtual void OnBeforeGameObjectsQueried(std::string& /*query*/) {}
 
+        /**
+     * @brief Fired before the `gameobject_addon` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeGameObjectAddonsQueried(std::string& /*query*/) {}
+
     /**
      * @brief Fired after data from the `gameobject` table has been parsed and converted into GameObjectData.
      *
@@ -1604,6 +1611,7 @@ public: /* WorldScript */
     void OnBeforeGameObjectTemplateAddonQueried(std::string& query);
     void OnBeforeGameObjectsQueried(std::string& query);
     void OnAfterGameObjectDataParsed(GameObjectData& gameObjectData, Field* fields);
+    void OnBeforeGameObjectAddonsQueried(std::string& query);
 
     // Grid Hooks
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);

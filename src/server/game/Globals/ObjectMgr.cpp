@@ -1216,8 +1216,12 @@ void ObjectMgr::LoadGameObjectAddons()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                               0     1                 2
-    QueryResult result = WorldDatabase.Query("SELECT guid, invisibilityType, invisibilityValue FROM gameobject_addon");
+    //                           0     1                 2
+    std::string query = "SELECT guid, invisibilityType, invisibilityValue FROM gameobject_addon";
+
+    sScriptMgr->OnBeforeGameObjectAddonsQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
