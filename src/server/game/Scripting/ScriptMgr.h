@@ -289,7 +289,7 @@ public:
      */
     virtual void OnBeforeGameObjectsQueried(std::string& /*query*/) {}
 
-        /**
+    /**
      * @brief Fired before the `gameobject_addon` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
@@ -319,6 +319,13 @@ public:
      * @param gameObjectData The full data of the game object that was removed from the grid.
      */
     virtual void OnAfterGameObjectRemovedFromGrid(ObjectGuid::LowType /*guid*/, GameObjectData const* /*gameObjectData*/) {}
+
+    /**
+     * @brief Fired before the `item_template` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeItemTemplatesQueried(std::string& /*query*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1612,6 +1619,7 @@ public: /* WorldScript */
     void OnBeforeGameObjectsQueried(std::string& query);
     void OnAfterGameObjectDataParsed(GameObjectData& gameObjectData, Field* fields);
     void OnBeforeGameObjectAddonsQueried(std::string& query);
+    void OnBeforeItemTemplatesQueried(std::string& query);
 
     // Grid Hooks
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);

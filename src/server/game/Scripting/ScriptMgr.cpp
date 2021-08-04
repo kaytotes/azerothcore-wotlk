@@ -477,6 +477,10 @@ void ScriptMgr::OnAfterGameObjectRemovedFromGrid(ObjectGuid::LowType guid, GameO
     FOREACH_SCRIPT(WorldScript)->OnAfterGameObjectRemovedFromGrid(guid, gameObjectData);
 }
 
+void ScriptMgr::OnBeforeItemTemplatesQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeItemTemplatesQueried(query);
+}
 
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
