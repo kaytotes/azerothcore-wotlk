@@ -130,8 +130,12 @@ uint32 LootStore::LoadLootTable()
     // Clearing store (for reloading case)
     Clear();
 
-    //                                                  0     1            2               3         4         5             6
-    QueryResult result = WorldDatabase.PQuery("SELECT Entry, Item, Reference, Chance, QuestRequired, LootMode, GroupId, MinCount, MaxCount FROM %s", GetName());
+    //                                               0     1            2               3         4         5             6
+    std::string query = Acore::StringFormat("SELECT Entry, Item, Reference, Chance, QuestRequired, LootMode, GroupId, MinCount, MaxCount FROM %s", GetName());
+
+    sScriptMgr->OnBeforeLootTemplateQueried(query, GetName());
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
         return 0;

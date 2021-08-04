@@ -482,6 +482,11 @@ void ScriptMgr::OnBeforeItemTemplatesQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeItemTemplatesQueried(query);
 }
 
+void ScriptMgr::OnBeforeLootTemplateQueried(std::string& query, std::string lootStoreName)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeLootTemplateQueried(query, lootStoreName);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA
