@@ -334,6 +334,13 @@ public:
      * @param lootStoreName The name of the loot store that is about to be queried. 
      */
     virtual void OnBeforeLootTemplateQueried(std::string& /*query*/, std::string /*lootStoreName*/) {}
+
+    /**
+     * @brief Fired before the `item_set_names` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeItemSetNamesQueried(std::string& /*query*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1629,6 +1636,7 @@ public: /* WorldScript */
     void OnBeforeGameObjectAddonsQueried(std::string& query);
     void OnBeforeItemTemplatesQueried(std::string& query);
     void OnBeforeLootTemplateQueried(std::string& query, std::string lootStoreName);
+    void OnBeforeItemSetNamesQueried(std::string& query);
 
     // Grid Hooks
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);

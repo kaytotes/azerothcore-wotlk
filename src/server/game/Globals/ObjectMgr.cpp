@@ -3076,8 +3076,12 @@ void ObjectMgr::LoadItemSetNames()
                 itemSetItems.insert(setEntry->itemId[i]);
     }
 
-    //                                                  0        1            2
-    QueryResult result = WorldDatabase.Query("SELECT `entry`, `name`, `InventoryType` FROM `item_set_names`");
+    //                           0        1            2
+    std::string query = "SELECT `entry`, `name`, `InventoryType` FROM `item_set_names`";
+
+    sScriptMgr->OnBeforeItemSetNamesQueried(query);
+
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
