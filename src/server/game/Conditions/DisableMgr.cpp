@@ -12,6 +12,7 @@
 #include "SpellInfo.h"
 #include "SpellMgr.h"
 #include "World.h"
+#include "ScriptMgr.h"
 
 namespace DisableMgr
 {
@@ -43,7 +44,11 @@ namespace DisableMgr
 
         m_DisableMap.clear();
 
-        QueryResult result = WorldDatabase.Query("SELECT sourceType, entry, flags, params_0, params_1 FROM disables");
+        std::string query = "SELECT sourceType, entry, flags, params_0, params_1 FROM disables";
+
+        sScriptMgr->OnBeforeDisablesQueried(query);
+
+        QueryResult result = WorldDatabase.Query(query.c_str());
 
         uint32 total_count = 0;
 

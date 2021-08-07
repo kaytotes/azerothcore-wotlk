@@ -492,6 +492,11 @@ void ScriptMgr::OnBeforeTransportsQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeTransportsQueried(query);
 }
 
+void ScriptMgr::OnBeforeDisablesQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeDisablesQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA
