@@ -487,11 +487,6 @@ void ScriptMgr::OnBeforeLootTemplateQueried(std::string& query, std::string loot
     FOREACH_SCRIPT(WorldScript)->OnBeforeLootTemplateQueried(query, lootStoreName);
 }
 
-void ScriptMgr::OnBeforeItemSetNamesQueried(std::string& query)
-{
-    FOREACH_SCRIPT(WorldScript)->OnBeforeItemSetNamesQueried(query);
-}
-
 void ScriptMgr::OnBeforeTransportsQueried(std::string& query)
 {
     FOREACH_SCRIPT(WorldScript)->OnBeforeTransportsQueried(query);

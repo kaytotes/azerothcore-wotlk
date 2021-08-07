@@ -336,13 +336,6 @@ public:
     virtual void OnBeforeLootTemplateQueried(std::string& /*query*/, std::string /*lootStoreName*/) {}
 
     /**
-     * @brief Fired before the `item_set_names` table is queried to allow us to modify the query that will be sent.
-     *
-     * @param query The query that we are overriding.
-     */
-    virtual void OnBeforeItemSetNamesQueried(std::string& /*query*/) {}
-
-    /**
      * @brief Fired before the `transports` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
