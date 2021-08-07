@@ -1636,7 +1636,6 @@ public: /* WorldScript */
     void OnBeforeGameObjectAddonsQueried(std::string& query);
     void OnBeforeItemTemplatesQueried(std::string& query);
     void OnBeforeLootTemplateQueried(std::string& query, std::string lootStoreName);
-    void OnBeforeItemSetNamesQueried(std::string& query);
     void OnBeforeTransportsQueried(std::string& query);
 
     // Grid Hooks
