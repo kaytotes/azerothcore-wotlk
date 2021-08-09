@@ -217,8 +217,13 @@ void GameEventMgr::LoadFromDB()
 {
     {
         uint32 oldMSTime = getMSTime();
-        //       1           2                           3                         4          5       6        7             8            9            10
-        QueryResult result = WorldDatabase.Query("SELECT eventEntry, UNIX_TIMESTAMP(start_time), UNIX_TIMESTAMP(end_time), occurence, length, holiday, holidayStage, description, world_event, announce FROM game_event");
+
+        //                     1           2                           3                         4          5       6        7             8            9            10
+        std::string query = "SELECT eventEntry, UNIX_TIMESTAMP(start_time), UNIX_TIMESTAMP(end_time), occurence, length, holiday, holidayStage, description, world_event, announce FROM game_event";
+
+        sScriptMgr->OnBeforeGameEventsQueried(query);
+        
+        QueryResult result = WorldDatabase.Query(query.c_str());
         if (!result)
         {
             mGameEvent.clear();
@@ -967,8 +972,12 @@ void GameEventMgr::LoadHolidayDates()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                               0   1        2           3
-    QueryResult result = WorldDatabase.Query("SELECT id, date_id, date_value, holiday_duration FROM holiday_dates");
+    //                           0   1        2           3
+    std::string query = "SELECT id, date_id, date_value, holiday_duration FROM holiday_dates";
+
+    sScriptMgr->OnBeforeHolidayDatesQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {

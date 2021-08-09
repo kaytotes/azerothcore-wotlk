@@ -497,6 +497,16 @@ void ScriptMgr::OnBeforeDisablesQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeDisablesQueried(query);
 }
 
+void ScriptMgr::OnBeforeGameEventsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeGameEventsQueried(query);
+}
+
+void ScriptMgr::OnBeforeHolidayDatesQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeHolidayDatesQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

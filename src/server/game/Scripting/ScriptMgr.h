@@ -348,6 +348,20 @@ public:
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeDisablesQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `game_event` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeGameEventsQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `holiday_dates` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeHolidayDatesQueried(std::string& /*query*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1645,6 +1659,8 @@ public: /* WorldScript */
     void OnBeforeLootTemplateQueried(std::string& query, std::string lootStoreName);
     void OnBeforeTransportsQueried(std::string& query);
     void OnBeforeDisablesQueried(std::string& query);
+    void OnBeforeGameEventsQueried(std::string& query);
+    void OnBeforeHolidayDatesQueried(std::string& query);
 
     // Grid Hooks
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);
