@@ -507,6 +507,11 @@ void ScriptMgr::OnBeforeHolidayDatesQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeHolidayDatesQueried(query);
 }
 
+void ScriptMgr::OnBeforeAreaTriggerTeleportsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeAreaTriggerTeleportsQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA

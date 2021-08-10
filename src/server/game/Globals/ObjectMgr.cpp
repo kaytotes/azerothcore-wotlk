@@ -6205,8 +6205,12 @@ void ObjectMgr::LoadAreaTriggerTeleports()
 
     _areaTriggerTeleportStore.clear();                                  // need for reload case
 
-    //                                               0        1              2                  3                  4                   5
-    QueryResult result = WorldDatabase.Query("SELECT ID,  target_map, target_position_x, target_position_y, target_position_z, target_orientation FROM areatrigger_teleport");
+    //                          0        1              2                  3                  4                   5
+    std::string query = "SELECT ID, target_map, target_position_x, target_position_y, target_position_z, target_orientation FROM areatrigger_teleport";
+
+    sScriptMgr->OnBeforeAreaTriggerTeleportsQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {
