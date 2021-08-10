@@ -514,8 +514,12 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
     _battlegroundMapTemplates.clear();
     _battlegroundTemplates.clear();
 
-    //                                               0   1                  2                  3       4       5                 6               7              8            9             10      11
-    QueryResult result = WorldDatabase.Query("SELECT ID, MinPlayersPerTeam, MaxPlayersPerTeam, MinLvl, MaxLvl, AllianceStartLoc, AllianceStartO, HordeStartLoc, HordeStartO, StartMaxDist, Weight, ScriptName FROM battleground_template");
+    //                          0   1                  2                  3       4       5                 6               7              8            9             10      11
+    std::string query = "SELECT ID, MinPlayersPerTeam, MaxPlayersPerTeam, MinLvl, MaxLvl, AllianceStartLoc, AllianceStartO, HordeStartLoc, HordeStartO, StartMaxDist, Weight, ScriptName FROM battleground_template";
+
+    sScriptMgr->OnBeforeBattleGroundTemplatesQueried(query);
+    
+    QueryResult result = WorldDatabase.Query(query.c_str());
 
     if (!result)
     {

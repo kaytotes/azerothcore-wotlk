@@ -512,6 +512,11 @@ void ScriptMgr::OnBeforeAreaTriggerTeleportsQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeAreaTriggerTeleportsQueried(query);
 }
 
+void ScriptMgr::OnBeforeBattleGroundTemplatesQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeBattleGroundTemplatesQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA
