@@ -407,6 +407,11 @@ bool Condition::Meets(ConditionSourceInfo& sourceInfo)
                     condMeets = unit->HasAuraType(AuraType(ConditionValue1));
                 break;
             }
+        case CONDITION_CUSTOM:
+            {
+                condMeets = sScriptMgr->OnConditionCheck(this, sourceInfo);
+                break;
+            }
         default:
             condMeets = false;
             break;
@@ -418,8 +423,7 @@ bool Condition::Meets(ConditionSourceInfo& sourceInfo)
     if (!condMeets)
         sourceInfo.mLastFailedCondition = this;
 
-    //bool script = sScriptMgr->OnConditionCheck(this, sourceInfo); // Returns true by default. // pussywizard: optimization
-    return condMeets;// && script;
+    return condMeets;
 }
 
 uint32 Condition::GetSearcherTypeMaskForCondition()
@@ -591,6 +595,9 @@ uint32 Condition::GetSearcherTypeMaskForCondition()
             break;
         case CONDITION_HAS_AURA_TYPE:
             mask |= GRID_MAP_TYPE_MASK_CREATURE | GRID_MAP_TYPE_MASK_PLAYER;
+            break;
+        case CONDITION_CUSTOM:
+            mask |= GRID_MAP_TYPE_MASK_ALL;
             break;
         default:
             ASSERT(false && "Condition::GetSearcherTypeMaskForCondition - missing condition handling!");
@@ -2222,6 +2229,15 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
                 if (cond->ConditionValue1 == SPELL_AURA_NONE || cond->ConditionValue1 >= TOTAL_AURAS)
                 {
                     LOG_ERROR("sql.sql", "Has Aura Effect condition has non existing aura (%u), skipped", cond->ConditionValue1);
+                    return false;
+                }
+                break;
+            }
+        case CONDITION_CUSTOM:
+            {
+                if (! cond->ScriptId)
+                {
+                    LOG_ERROR("sql.sql", "Has Custom condition but no ScriptName attached, skipped");
                     return false;
                 }
                 break;
