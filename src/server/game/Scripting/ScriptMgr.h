@@ -376,6 +376,41 @@ public:
      * @param query The query that we are overriding.
      */
     virtual void OnBeforeBattleGroundTemplatesQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `quest_template` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeQuestTemplatesQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `quest_template_addon` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeQuestTemplateAddonsQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `quest_details` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeQuestDetailsQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `quest_request_items` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeQuestRequestItemsQueried(std::string& /*query*/) {}
+
+    /**
+     * @brief Fired before the `quest_offer_reward` table is queried to allow us to modify the query that will be sent.
+     *
+     * @param query The query that we are overriding.
+     */
+    virtual void OnBeforeQuestOfferRewardsQueried(std::string& /*query*/) {}
 };
 
 class FormulaScript : public ScriptObject
@@ -1677,6 +1712,11 @@ public: /* WorldScript */
     void OnBeforeHolidayDatesQueried(std::string& query);
     void OnBeforeAreaTriggerTeleportsQueried(std::string& query);
     void OnBeforeBattleGroundTemplatesQueried(std::string& query);
+    void OnBeforeQuestTemplatesQueried(std::string& query);
+    void OnBeforeQuestTemplateAddonsQueried(std::string& query);
+    void OnBeforeQuestDetailsQueried(std::string& query);
+    void OnBeforeQuestRequestItemsQueried(std::string& query);
+    void OnBeforeQuestOfferRewardsQueried(std::string& query);
 
     // Grid Hooks
     void OnAfterCreatureAddedToGrid(ObjectGuid::LowType spawnId, CreatureData const* creatureData);

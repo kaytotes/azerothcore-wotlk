@@ -517,6 +517,31 @@ void ScriptMgr::OnBeforeBattleGroundTemplatesQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeBattleGroundTemplatesQueried(query);
 }
 
+void ScriptMgr::OnBeforeQuestTemplatesQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeQuestTemplatesQueried(query);
+}
+
+void ScriptMgr::OnBeforeQuestTemplateAddonsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeQuestTemplateAddonsQueried(query);
+}
+
+void ScriptMgr::OnBeforeQuestDetailsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeQuestDetailsQueried(query);
+}
+
+void ScriptMgr::OnBeforeQuestRequestItemsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeQuestRequestItemsQueried(query);
+}
+
+void ScriptMgr::OnBeforeQuestOfferRewardsQueried(std::string& query)
+{
+    FOREACH_SCRIPT(WorldScript)->OnBeforeQuestOfferRewardsQueried(query);
+}
+
 void ScriptMgr::OnBeforeConfigLoad(bool reload)
 {
 #ifdef ELUNA
