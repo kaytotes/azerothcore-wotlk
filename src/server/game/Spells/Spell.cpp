@@ -659,6 +659,8 @@ Spell::Spell(Unit* caster, SpellInfo const* info, TriggerCastFlags triggerFlags,
 
     // xinef:
     _spellTargetsSelected = false;
+
+    m_weaponItem = nullptr;
 }
 
 Spell::~Spell()
@@ -2538,7 +2540,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
 
         // Do triggers for unit (reflect triggers passed on hit phase for correct drop charge)
         if (canEffectTrigger)
-            caster->ProcDamageAndSpell(unitTarget, procAttacker, procVictim, procEx, addhealth, m_attackType, m_spellInfo, m_triggeredByAuraSpell, m_triggeredByAuraEffectIndex);
+            caster->ProcDamageAndSpell(unitTarget, procAttacker, procVictim, procEx, addhealth, m_attackType, m_spellInfo, m_triggeredByAuraSpell, m_triggeredByAuraEffectIndex, this);
     }
     // Do damage and triggers
     else if (m_damage > 0)
@@ -2612,7 +2614,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
         // Do triggers for unit (reflect triggers passed on hit phase for correct drop charge)
         if (canEffectTrigger)
         {
-            caster->ProcDamageAndSpell(unitTarget, procAttacker, procVictim, procEx, damageInfo.damage, m_attackType, m_spellInfo, m_triggeredByAuraSpell, m_triggeredByAuraEffectIndex);
+            caster->ProcDamageAndSpell(unitTarget, procAttacker, procVictim, procEx, damageInfo.damage, m_attackType, m_spellInfo, m_triggeredByAuraSpell, m_triggeredByAuraEffectIndex, this);
             if (caster->GetTypeId() == TYPEID_PLAYER && m_spellInfo->HasAttribute(SPELL_ATTR0_CANCELS_AUTO_ATTACK_COMBAT) == 0 &&
                     m_spellInfo->HasAttribute(SPELL_ATTR4_SUPRESS_WEAPON_PROCS) == 0 && (m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_MELEE || m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_RANGED))
                 caster->ToPlayer()->CastItemCombatSpell(unitTarget, m_attackType, procVictim, procEx);
@@ -2629,7 +2631,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
         // Do triggers for unit (reflect triggers passed on hit phase for correct drop charge)
         if (canEffectTrigger)
         {
-            caster->ProcDamageAndSpell(unitTarget, procAttacker, procVictim, procEx, 0, m_attackType, m_spellInfo, m_triggeredByAuraSpell, m_triggeredByAuraEffectIndex);
+            caster->ProcDamageAndSpell(unitTarget, procAttacker, procVictim, procEx, 0, m_attackType, m_spellInfo, m_triggeredByAuraSpell, m_triggeredByAuraEffectIndex, this);
             // Xinef: eg. rogue poisons can proc off cheap shot, etc. so this block should be here also
             // Xinef: ofc count only spells that HIT the target, little hack used to fool the system
             if ((procEx & PROC_EX_NORMAL_HIT || procEx & PROC_EX_CRITICAL_HIT) && caster->GetTypeId() == TYPEID_PLAYER && m_spellInfo->HasAttribute(SPELL_ATTR0_CANCELS_AUTO_ATTACK_COMBAT) == 0 &&
@@ -2665,8 +2667,11 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
         }
     }
 
-    if (missInfo != SPELL_MISS_EVADE && effectUnit != m_caster && m_caster->IsFriendlyTo(effectUnit) && m_spellInfo->IsPositive() && effectUnit->IsInCombat())
+    if (missInfo != SPELL_MISS_EVADE && effectUnit != m_caster && m_caster->IsFriendlyTo(effectUnit) && m_spellInfo->IsPositive() &&
+        effectUnit->IsInCombat() && !m_spellInfo->HasAttribute(SPELL_ATTR1_NO_THREAT))
+    {
         m_caster->SetInCombatWith(effectUnit);
+    }
 
     // Check for SPELL_ATTR7_CAN_CAUSE_INTERRUPT
     if (m_spellInfo->HasAttribute(SPELL_ATTR7_CAN_CAUSE_INTERRUPT) && effectUnit->GetTypeId() != TYPEID_PLAYER)
@@ -2784,10 +2789,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit* unit, uint32 effectMask, bool scaleA
             // xinef: triggered spells should not prolong combat
             if (unit->IsInCombat() && !m_spellInfo->HasAttribute(SPELL_ATTR3_SUPRESS_TARGET_PROCS) && !m_triggeredByAuraSpell)
             {
-                // xinef: start combat with hostile unit...
-                if (Unit* hostile = unit->getAttackerForHelper())
-                    m_caster->CombatStart(hostile, true);
-                //m_caster->SetInCombatState(unit->GetCombatTimer() > 0, unit);
+                m_caster->SetInCombatState(unit->GetCombatTimer() > 0, unit);
                 unit->getHostileRefManager().threatAssist(m_caster, 0.0f);
             }
         }
@@ -5076,7 +5078,7 @@ void Spell::HandleThreatSpells()
 
         threat += threatEntry->flatMod;
     }
-    else if (m_spellInfo->HasAttribute(SPELL_ATTR0_CU_NO_INITIAL_THREAT) == 0)
+    else if (!m_spellInfo->HasAttribute(SPELL_ATTR0_CU_NO_INITIAL_THREAT))
         threat += m_spellInfo->SpellLevel;
 
     // past this point only multiplicative effects occur
@@ -5663,7 +5665,13 @@ SpellCastResult Spell::CheckCast(bool strict)
                             m_caster->RemoveMovementImpairingAuras(true);
                     }
                     if (m_caster->HasUnitState(UNIT_STATE_ROOT))
-                        return SPELL_FAILED_ROOTED;
+                    {
+                        // Exception for Master's Call
+                        if (m_spellInfo->Id != 54216)
+                        {
+                            return SPELL_FAILED_ROOTED;
+                        }
+                    }
                     if (m_caster->GetTypeId() == TYPEID_PLAYER)
                         if (Unit* target = m_targets.GetUnitTarget())
                             if (!target->IsAlive())
@@ -6116,6 +6124,14 @@ SpellCastResult Spell::CheckCast(bool strict)
                     if (m_targets.GetUnitTarget()->getPowerType() != POWER_MANA)
                         return SPELL_FAILED_BAD_TARGETS;
 
+                    break;
+                }
+            case SPELL_AURA_HOVER:
+                {
+                    if ((m_spellInfo->AuraInterruptFlags & AURA_INTERRUPT_FLAG_MOUNT) != 0 && m_targets.GetUnitTarget() && m_targets.GetUnitTarget()->IsMounted())
+                    {
+                        return SPELL_FAILED_NOT_ON_MOUNTED;
+                    }
                     break;
                 }
             default:
@@ -7078,6 +7094,8 @@ SpellCastResult Spell::CheckItems()
             if (!item->IsFitToSpellRequirements(m_spellInfo))
                 return SPELL_FAILED_EQUIPPED_ITEM_CLASS_OFFHAND;
         }
+
+        m_weaponItem = m_caster->ToPlayer()->GetWeaponForAttack(m_attackType, true);
     }
 
     return SPELL_CAST_OK;
