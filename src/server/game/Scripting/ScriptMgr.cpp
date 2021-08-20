@@ -527,11 +527,6 @@ void ScriptMgr::OnBeforeQuestTemplateAddonsQueried(std::string& query)
     FOREACH_SCRIPT(WorldScript)->OnBeforeQuestTemplateAddonsQueried(query);
 }
 
-void ScriptMgr::OnBeforeQuestDetailsQueried(std::string& query)
-{
-    FOREACH_SCRIPT(WorldScript)->OnBeforeQuestDetailsQueried(query);
-}
-
 void ScriptMgr::OnBeforeQuestRequestItemsQueried(std::string& query)
 {
     FOREACH_SCRIPT(WorldScript)->OnBeforeQuestRequestItemsQueried(query);

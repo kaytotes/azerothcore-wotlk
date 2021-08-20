@@ -4152,12 +4152,8 @@ void ObjectMgr::LoadQuests()
     std::map<uint32, uint32> usedMailTemplates;
 
     // Load `quest_details`
-    //               0   1       2       3       4       5            6            7            8
-    query = "SELECT ID, Emote1, Emote2, Emote3, Emote4, EmoteDelay1, EmoteDelay2, EmoteDelay3, EmoteDelay4 FROM quest_details";
-
-    sScriptMgr->OnBeforeQuestDetailsQueried(query);
-    
-    result = WorldDatabase.Query(query.c_str());
+    //                                   0   1       2       3       4       5            6            7            8
+    result = WorldDatabase.Query("SELECT ID, Emote1, Emote2, Emote3, Emote4, EmoteDelay1, EmoteDelay2, EmoteDelay3, EmoteDelay4 FROM quest_details");
 
     if (!result)
     {
