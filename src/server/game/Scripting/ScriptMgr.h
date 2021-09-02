@@ -196,6 +196,13 @@ public:
     virtual void OnShutdown() { }
 
     /**
+     * @brief This hook runs before finalizing the player world session. Can be also used to mutate the cache version of the Client.
+     *
+     * @param version The cache version that we will be sending to the Client.
+     */
+    virtual void OnBeforeFinalizePlayerWorldSession(uint32& /*cacheVersion*/) {}
+
+    /**
      * @brief Fired before the `creature_template` table is queried to allow us to modify the query that will be sent.
      *
      * @param query The query that we are overriding.
@@ -1676,6 +1683,7 @@ public: /* WorldScript */
     void OnOpenStateChange(bool open);
     void OnBeforeConfigLoad(bool reload);
     void OnAfterConfigLoad(bool reload);
+    void OnBeforeFinalizePlayerWorldSession(uint32& cacheVersion);
     void OnMotdChange(std::string& newMotd);
     void OnShutdownInitiate(ShutdownExitCode code, ShutdownMask mask);
     void OnShutdownCancel();
